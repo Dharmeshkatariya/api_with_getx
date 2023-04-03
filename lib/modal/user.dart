@@ -20,14 +20,13 @@ class UserData {
 
 class Entries {
   Entries();
-
   late final String API;
   late final String Description;
   late final String Auth;
    bool? HTTPS;
  String? Cors;
   late final String Link;
-  late final String Category;
+  late final String  Category;
 
   Entries.fromJson(Map<String, dynamic> json) {
     API = json['API'];
