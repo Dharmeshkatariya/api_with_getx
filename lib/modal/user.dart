@@ -19,21 +19,13 @@ class UserData {
 }
 
 class Entries {
-  Entries({
-    required this.API,
-    required this.Description,
-    required this.Auth,
-    required this.HTTPS,
-    required this.Cors,
-    required this.Link,
-    required this.Category,
-  });
+  Entries();
 
   late final String API;
   late final String Description;
   late final String Auth;
-  late final bool HTTPS;
-  late final String Cors;
+   bool? HTTPS;
+ String? Cors;
   late final String Link;
   late final String Category;
 
