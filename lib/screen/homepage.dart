@@ -15,7 +15,7 @@ class HomePage extends GetView<HomePageController> {
           child: ListView.builder(
               itemCount: controller.finalList.length,
               itemBuilder: (BuildContext context, int index) {
-                return _demoItem(index);
+                return _listItem(index);
               }),
         ),
         onEmpty: const EmptyView(message: 'Data not available!'),
@@ -25,81 +25,50 @@ class HomePage extends GetView<HomePageController> {
     );
   }
 
-  Widget _demoItem(int index) {
-    DemoData data = controller.finalList[index];
+  Widget _listItem(int index) {
+    CategoryData categoryData = controller.finalList[index];
     return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
-          Row(
-            children: [
-              Text(data.title),
-              IconButton(
-                  onPressed: () {
-                    data.isExpand.value != data.isExpand.value;
-                  },
-                  icon: const Icon(Icons.keyboard_arrow_down))
-            ],
+          ListTile(
+            title: Text("category : ${categoryData.title}"),
+            trailing: IconButton(
+                onPressed: () {
+                  controller.onChange(index);
+                },
+                icon: categoryData.isExpand
+                    ? const Icon(Icons.keyboard_arrow_up_rounded)
+                    : const Icon(Icons.keyboard_arrow_down)),
           ),
-          data.isExpand.value
+          Divider(
+            height: categoryData.isExpand ? 50 : 0,
+          ),
+          categoryData.isExpand
               ? ListView.builder(
+                  itemCount: categoryData.mList.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: data.mList.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return _item2(index, data.mList);
+                    return _listviewItem(index, categoryData);
                   })
-              : Container(),
+              : Container()
         ],
       ),
     );
   }
 
-  Widget _item2(int index, List<String> mList) {
-    String str = mList[index];
-    return Container(
-      child: Column(
-        children: [
-          Text(str),
-        ],
-      ),
-    );
-  }
-
-  Widget _listItem(int index) {
-    Entries entries = controller.userList[index];
-    return ListView.builder(
-        itemCount: controller.userList.length,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return Column(
-            children: [
-              ListTile(
-                title: Text("category : ${entries.Category}"),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                ),
-              ),
-              _listviewItem(index),
-            ],
-          );
-        });
-  }
-
-  Widget _listviewItem(int index) {
-    Entries entries = controller.userList[index];
+  Widget _listviewItem(int index, CategoryData categoryData) {
+    Entries entries = categoryData.mList[index];
     return Container(
       decoration: BoxDecoration(
         color: Colors.blue.shade100,
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 1, vertical: 10),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text("Category : ${entries.Category}"),
           Text("APi : ${entries.API}"),
@@ -114,7 +83,7 @@ class HomePage extends GetView<HomePageController> {
                     checkColor: Colors.white,
                     value: entries.HTTPS!,
                     onChanged: (bool? value) {
-                      controller.httpsChecked(index, value!);
+                      // controller.httpsChecked(index, value!);
                     },
                   ),
                 ],
