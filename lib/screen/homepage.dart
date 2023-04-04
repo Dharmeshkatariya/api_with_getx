@@ -10,6 +10,11 @@ class HomePage extends GetView<HomePageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.red.shade200,
+        title: const Text("Product Data"),
+      ),
       body: controller.obx(
         (state) => SafeArea(
           child: ListView.builder(
@@ -20,7 +25,7 @@ class HomePage extends GetView<HomePageController> {
         ),
         onEmpty: const EmptyView(message: 'Data not available!'),
         onLoading: const Center(child: CircularProgressIndicator()),
-        onError: (error) => EmptyView(message: error.toString() ?? ''),
+        onError: (error) => EmptyView(message: error.toString()),
       ),
     );
   }

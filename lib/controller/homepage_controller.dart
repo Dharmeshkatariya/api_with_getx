@@ -3,8 +3,7 @@ import 'package:api_with_getx/modal/user.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-class HomePageController extends GetxController
-    with StateMixin<List<CategoryData>> {
+class HomePageController extends GetxController with StateMixin<List<CategoryData>> {
   RxBool hSelect = false.obs;
   RxBool cSelected = false.obs;
   List<CategoryData> finalList = [];
@@ -85,6 +84,8 @@ class HomePageController extends GetxController
     for (int i = 0; i < finalList.length; i++) {
       if (i == index) {
         finalList[index].isExpand = !finalList[index].isExpand;
+      }else {
+        finalList[i].isExpand = false;
       }
     }
     update();
